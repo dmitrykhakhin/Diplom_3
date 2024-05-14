@@ -1,5 +1,7 @@
 import string
 import random
+
+import allure
 import requests
 
 from data import Url
@@ -33,11 +35,13 @@ class Helper:
 
 class User:
     @staticmethod
+    @allure.step("Отправить запрос на регистрацию нового пользователя")
     def register_new_user_and_return_response(payload):
         response = requests.post(Url.URL + Url.REGISTER_USER_HANDLE, data=payload)
         return response
 
     @staticmethod
+    @allure.step("Отправить запрос на удаление пользователя")
     def delete_user(token, email):
         requests.delete(Url.URL + Url.AUTHORIZATION_USER_HANDLE,
                         headers={'Authorization': token},
@@ -46,6 +50,7 @@ class User:
 
 class Order:
     @staticmethod
+    @allure.step("Отправить запрос с авторизацией на создание заказа")
     def create_order_with_auth_and_return_response(token, ingredient_list):
         response = requests.post(Url.URL + Url.ORDERS_HANDLE,
                                  headers={'Authorization': token},
